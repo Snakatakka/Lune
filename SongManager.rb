@@ -1,3 +1,5 @@
+require 'ruby2d'
+
 def get_songs(file_path)
     files = Dir.new(file_path)
     songs = Dir.children(files)
@@ -10,3 +12,4 @@ def get_songs(file_path)
 
     return songs
 end
+
