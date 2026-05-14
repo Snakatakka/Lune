@@ -6,6 +6,7 @@ require_relative 'FileManager.rb'
 
 # classes
 require_relative 'classes\Element.rb'
+require_relative 'classes\Interactable.rb'
 
 set title: "LuneMusicPlayer"
 set width: 480
@@ -17,8 +18,6 @@ currentSong = Music.new("tracks\\#{songs[0]}")
 currentSong.play
 
 paused = false
-
-test = Element.new("square", 120, 150, 100)
 
 on :key_down do |input| # future note to self, don't put this in the update loop or else it'll break horrendously
     case input.key
