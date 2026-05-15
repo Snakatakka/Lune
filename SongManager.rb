@@ -12,4 +12,3 @@ def get_songs(file_path)
 
     return songs
 end
-

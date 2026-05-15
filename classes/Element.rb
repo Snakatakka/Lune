@@ -4,11 +4,12 @@ require 'ruby2d'
 
 class Element
     @x_pos = 0
-    @y_pos = 0
+    @y_pos = 0 # y position is the opposite actually. higher number = lower down on the screen
+    @height = 0
+    @width = 0
     @size = 0
     @color = 'white'
-    @width = 0
-    @height = 0
+
 
     def initialize(
         type, 

@@ -13,9 +13,14 @@ set height: 600
 set background: "#574da3"
 
 songs = get_songs("tracks")
-songID = 0
-currentSong = Music.new("tracks\\#{songs[songID]}")
-currentSong.play
+song_id = 0
+current_song = Music.new("tracks\\#{songs[song_id]}")
+current_song_title = Text.new("#{songs[song_id]}")
+current_song.play
+
+# chat what should i call this element
+
+container = Element.new("rectangle", 240, 225, 350, 400)
 
 paused = false
 
@@ -23,47 +28,56 @@ on :key_down do |input| # get input from user
     case input.key
     when "p" # keyboard controls for pausing
         paused = !paused
-    when "r" # reload music
-        currentSong.pause
+
+    when "r" # reload app
+        current_song.stop
+        current_song_title.remove
         songs = get_songs("tracks")
-        currentSong = Music.new("tracks\\#{songs[0]}")
-        currentSong.play
+        current_song = Music.new("tracks\\#{songs[0]}")
+        songs = get_songs("tracks")
+        current_song_title.add
+        current_song.play
 
-    when "right"
-        currentSong.stop
-        unless songID + 1 >= songs.length
-            songID += 1
-            currentSong = Music.new("tracks\\#{songs[songID]}")
+    when "right" # cycle song forward
+        current_song.stop
+        current_song_title.remove
+        unless song_id + 1 >= songs.length
+            song_id += 1
+            current_song = Music.new("tracks\\#{songs[song_id]}")
+            current_song_title = Text.new("#{songs[song_id]}")
         else
-            songID = 0
-            currentSong = Music.new("tracks\\#{songs[songID]}")
+            song_id = 0
+            current_song = Music.new("tracks\\#{songs[song_id]}")
+            current_song_title = Text.new("#{songs[song_id]}")
         end
-        currentSong.play
-    
-    when "left"
-        currentSong.stop
-        unless songID - 1 < 0
-            songID -= 1
-            currentSong = Music.new("tracks\\#{songs[songID]}")
-        else
-            songID = songs.length - 1
-            currentSong = Music.new("tracks\\#{songs[songID]}")
-        end
-        currentSong.play
+        current_song_title.add
+        current_song.play
 
+    when "left" # cycle song backwards
+        current_song.stop
+        current_song_title.remove
+        unless song_id - 1 < 0
+            song_id -= 1
+            current_song = Music.new("tracks\\#{songs[song_id]}")
+            current_song_title = Text.new("#{songs[song_id]}")
+        else
+            song_id = songs.length - 1
+            current_song = Music.new("tracks\\#{songs[song_id]}")
+            current_song_title = Text.new("#{songs[song_id]}")
+        end
+        current_song_title.add
+        current_song.play
     when "escape" # quit
         close
-
-    else
-        puts input.key
     end
 end
 
 update do
+
     if paused
-        currentSong.pause
+        current_song.pause
     else
-        currentSong.resume
+        current_song.resume
     end
 end
 
