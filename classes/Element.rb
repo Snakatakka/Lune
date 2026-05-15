@@ -3,8 +3,10 @@
 require 'ruby2d'
 
 class Element
+    @type = ''
     @x_pos = 0
     @y_pos = 0 # y position is the opposite actually. higher number = lower down on the screen
+    @z_index
     @height = 0
     @width = 0
     @size = 0
@@ -14,7 +16,8 @@ class Element
     def initialize(
         type, 
         x_pos, 
-        y_pos, 
+        y_pos,
+        z_index=0,
         height=0, 
         width=0, 
         size=0, 
@@ -24,12 +27,14 @@ class Element
         when "square"
             @x_pos = (x_pos - (size / 2)) # this makes it look like the shape is drawn from its center
             @y_pos = (y_pos - (size / 2))
+            @z_index = z_index
             @size = size
             @color = color
 
             Square.new(
                 x: @x_pos,
                 y: @y_pos,
+                z: @z_index,
                 size: @size,
                 color: @color,
             )
