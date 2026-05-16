@@ -75,13 +75,14 @@ main_screen = Element.new(
 
 paused = false
 
-def shuffle()
-    shuffled_song = rand(0..($songs.length - 1))
+def random_song() # this used to be shuffling but i gave up on that :sunglasses_cool:
+    randomized_song = rand(0..($songs.length - 1))
     
-    unless shuffled_song == $songs[song_id] # prevents shuffle from choosing the song that's currently playing
-        change_song(shuffled_song)
-    else
-        change_song(shuffled_song + 1)
+    while randomized_song == $song_id
+        randomized_song = rand(0..($songs.length - 1))
+    end
+    
+    change_song(randomized_song)
 end
 
 def reload()
