@@ -57,10 +57,18 @@ class Element
 
     def get_attribute(attribute)
         case attribute.downcase
-        when "x"
-            return @x_pos
-        when "y"
-            return @y_pos
+        when "x_pos"
+            if @type == "square"
+                return @x_pos + (@size / 2)
+            else
+                return @x_pos + (@width / 2)
+            end
+        when "y_pos"
+            if @type == "square"
+                return @y_pos + (@size / 2)
+            else
+                return @y_pos + (@height / 2)
+            end
         when "size"
             return @size
         when "color"
