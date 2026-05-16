@@ -1,5 +1,6 @@
 # gems
 require 'ruby2d'
+require 'wahwah'
 
 # files
 require_relative 'SongManager.rb'
@@ -15,24 +16,46 @@ set width: 480
 set height: 600
 set background: "#4AABFF"
 
+
+autoplay = false
 $songs = get_songs("tracks")
 $song_id = 0
 $current_song = Music.new("tracks\\#{$songs[$song_id]}")
 $current_song_title = Text.new("#{$songs[$song_id].slice(0..($songs[$song_id].index('.') - 1))}", z: 10) # this is incomprehensible L_L
-autoplay = false
+$tag = ("tracks\\#{$songs[$song_id]}")
 
+def get_song_length()
+    $tag = WahWah.open("tracks\\#{$songs[$song_id]}")
+    song_length_minutes = ($tag.duration.round() / 60)
 
-$current_song.play
+    unless ($tag.duration.round() % 60) < 10
+        song_length_seconds = "#{($tag.duration.round() % 60)}"
+    else
+        song_length_seconds = "0" << "#{($tag.duration.round() % 60)}"
+    end
+
+    return "#{song_length_minutes}:#{song_length_seconds}"
+end
+
+$song_length = Text.new(get_song_length(), z: 10, y: 30)
 
 def change_song(new_song_id)
+    # get rid of all the old stuff
     $current_song.stop
     $current_song_title.remove
+    $song_length.remove
+
     $song_id = new_song_id
     $current_song = Music.new("tracks\\#{$songs[$song_id]}")
     $current_song_title = Text.new("#{$songs[$song_id].slice(0..($songs[$song_id].index('.') - 1))}", z: 10)
+    $song_length = Text.new(get_song_length(), z: 10, y: 30)
+
+    $song_length.add
     $current_song_title.add
     $current_song.play
 end
+
+$current_song.play
 
 # user interface
 # -----------------------------------------------------------------------------------------------------------------
@@ -111,8 +134,8 @@ on :key_down do |input| # keyboard input
     case input.key
     when "p" # pause song
         paused = !paused
-    when "s" # shuffle song
-        shuffle()
+    when "s" # randomize song
+        random_song()
     when "r" # reload app
         reload()
     when "right" # cycle song forward

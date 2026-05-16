@@ -2,15 +2,18 @@ GEM
   remote: https://rubygems.org/
   specs:
     ruby2d (0.12.1)
+    wahwah (1.6.7)
 
 PLATFORMS
   x64-mingw-ucrt
 
 DEPENDENCIES
   ruby2d (~> 0.12.1)
+  wahwah
 
 CHECKSUMS
   ruby2d (0.12.1) sha256=404fe5ae7b38d825af748d2ea04c5cdd44e338ed1e06fb8690ad704a2994e77e
+  wahwah (1.6.7) sha256=3272c847c19ac7d047ba2521734429bc99f03dff604c58a57b7e687d8dc2011d
 
 BUNDLED WITH
   4.0.10
